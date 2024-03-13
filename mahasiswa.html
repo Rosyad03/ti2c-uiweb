@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tugas Javascript</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #f5f5f5;
+            }
+            form {
+                width: 400px;
+                margin-bottom: 20px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 4px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            label {
+                display: block;
+                margin-bottom: 8px;
+            }
+            input[type="number"], input[type="text"] {
+                width: 100%;
+                padding: 8px;
+                border-radius: 4px;
+                border: 1px solid #ddd;
+                box-sizing: border-box;
+                margin-bottom: 16px;
+            }
+            button {
+                width: 100%;
+                padding: 8px;
+                border-radius: 4px;
+                background-color: #0C359E;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #001C30;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #001C30;
+                color: white;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
+        <form id="studentForm">
+            <label for="nim">NIM:</label><br>
+            <input type="number" id="nim" name="nim" required><br>
+            <label for="name">Nama:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+            <button type="button" onclick="saveStudent()">Save</button>
+        </form>
+        
+        <table id="studentTable">
+            <thead>
+              <tr>
+                <th style="width:30%">NIM</th>
+                <th style="width:70%">Nama</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <script>
+            // Define array untuk list mahasiswa
+            var arrStudent = [];
+
+            // Define object mahasiswa
+            function Student(nim,name) {
+                this.nim = nim;
+                this.name = name;
+            }
+
+            // Fungsi simpan data mahasiswa
+            function saveStudent() {
+                // Deklarasi variable dr id element input
+                var studentForm = document.getElementById("studentForm");
+                var nim = document.getElementById("nim").value;
+                var name = document.getElementById("name").value;
+                
+                // Validasi input
+                if(nim === "" || name === "") {
+                    alert("NIM dan Nama harus diisi");
+                    return;
+                }
+                
+                // Buat student object baru
+                var student = new Student(nim,name);
+                arrStudent.push(student);
+                // Reset Form
+                studentForm.reset();
+                // Tampilkan data yang ditambahkan >> fungsi show
+                showStudent(student);
+
+                // Tampilkan log dan Simpan data ke array
+                console.log(student);
+                console.log(arrStudent);
+                showStudentList(student);
+            }
+            
+            // Menampilkan data mahasiswa ke HTML
+            function showStudent(student) {    
+                var tbody = document.querySelector("#studentTable tbody");
+                var tr = document.createElement("tr");
+                // buat kolom value nim
+                var tdNim = document.createElement("td");
+                tdNim.textContent = student.nim;
+                tr.appendChild(tdNim);
+
+                // buat kolom value nama
+                var tdNama = document.createElement("td");
+                tdNama.textContent = student.name;
+                tr.appendChild(tdNama);
+                
+
+                tbody.appendChild(tr);
+            }
+
+            // Menampilkan daftar mahasiswa ke HTML
+            function showStudentList(student) {
+                var tbody = document.querySelector("#studentTable tbody");
+                var tr = document.createElement("tr");
+                // buat kolom value nim
+                var tdNim = document.createElement("td");
+                tdNim.textContent = student.nim;
+                tr.appendChild(tdNim);
+
+                // buat kolom value nama
+                var tdNama = document.createElement("td");
+                tdNama.textContent = student.name;
+                tr.appendChild(tdNama);
+
+                // tambahkan baris ke tabel
+                tbody.appendChild(tr);
+            }
+        </script>
+    </body>
+</html>
